@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+  <head>
+    <title>CoronaVirus Tracker</title>
+    
+  </head>
+
+  <body>
+  
+    
+    <table>
+      <tr>
+        <th>STATE</th>
+        <th>COUNTRY</th>
+        <th>CONFIRMED CASED</th>
+        <th>DEATH</th>
+        <th>RECOVERED</th>
+      </tr>
+      
+      <tr th:each="locationstat : ${locationstates}">
+        <td th:text="${locationstat.state}"></td>
+        <td th:text="${locationstat.country}"></td>
+        <td th:text="${locationstat.confirmedCases}">0</td>
+        <td th:text="${locationstat.deaths}">0</td>
+        <td th:text="${locationstat.recovered}">0</td>
+        
+        
+      </tr>
+    </table>
+  
+  </body>
+
+</html>
