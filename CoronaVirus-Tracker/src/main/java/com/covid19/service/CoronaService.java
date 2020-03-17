@@ -6,6 +6,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -15,6 +18,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -24,7 +28,8 @@ import com.covid19.model.LocationStats;
 public class CoronaService {
 
 	
-	private static String url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports/03-14-2020.csv";
+	
+	private static String url = "https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_daily_reports";
 	
 	private List<LocationStats> allStats = new ArrayList<LocationStats>();
 	
@@ -32,10 +37,13 @@ public class CoronaService {
 	@Scheduled(cron = "* * 1 * * *")
 	public void fetchVirusData() throws IOException, InterruptedException {
 		List<LocationStats> localStats = new ArrayList<LocationStats>();
-		
+		LocalDate date = LocalDate.now();
+		LocalDate minusDay = date.minusDays(1);
+		DateTimeFormatter inputFormat = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+		String format3 = inputFormat.format(minusDay);
 		HttpClient httpClient = HttpClient.newHttpClient();
 		HttpRequest request = HttpRequest.newBuilder()
-							  .uri(URI.create(url))
+							  .uri(URI.create(url + "/" + format3 + ".csv"))
 							  .build();
 		
 		
@@ -57,6 +65,7 @@ public class CoronaService {
 		
 	}
 
+	
 	public List<LocationStats> getAllStats() {
 		return allStats;
 	}
