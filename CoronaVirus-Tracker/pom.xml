@@ -18,6 +18,7 @@
 	<properties>
 		<java.version>12</java.version>
 	</properties>
+		<packaging>jar</packaging>
 
 	<dependencies>
 		<dependency>
