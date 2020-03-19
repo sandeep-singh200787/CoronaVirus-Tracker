@@ -10,6 +10,7 @@ public class CoronaVirusTrackerApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(CoronaVirusTrackerApplication.class, args);
+		System.out.println("CHanges to git");
 	}
 
 }
